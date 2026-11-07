@@ -7,7 +7,7 @@ export async function onRequestPost({request,env}){
     stage="parse_request";
     const{email,password}=await readJson(request);
     const e=String(email||"").trim().toLowerCase();
-    if(!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(e)||e.length>254)return json({error:"Enter a valid email address."},400);
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)||e.length>254)return json({error:"Enter a valid email address."},400);
     if(typeof password!=="string"||password.length<12||password.length>128)return json({error:"Use a password between 12 and 128 characters."},400);
     stage="check_database_binding";
     if(!env.DB)throw new Error("D1 binding env.DB is unavailable");
