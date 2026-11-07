@@ -5,10 +5,10 @@ compatibility_date = "2026-11-01"
 [[d1_databases]]
 binding = "DB"
 database_name = "siteguard-db"
-database_id = "REPLACE_WITH_D1_DATABASE_ID"
+database_id = "fbbf1b80-b470-4cfb-aa3c-672f46695313"
 
 [triggers]
 crons = ["*/5 * * * *"]
 
 [vars]
-APP_ORIGIN = "https://YOUR-SITEGUARD-DOMAIN"
+APP_ORIGIN = "https://siteguard.pages.dev"
