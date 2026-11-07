@@ -11,4 +11,4 @@ database_id = "fbbf1b80-b470-4cfb-aa3c-672f46695313"
 crons = ["*/5 * * * *"]
 
 [vars]
-APP_ORIGIN = "https://siteguard.pages.dev"
+APP_ORIGIN = "https://siteguard-ezr.pages.dev"
