@@ -1,2 +1,2 @@
-import {json,cookie,sha256} from "../_lib.js";
-export async function onRequestPost({request,env}){const t=cookie(request,"sg_session");if(t)await env.DB.prepare("DELETE FROM sessions WHERE token_hash=?").bind(await sha256(t)).run();return json({ok:true},200,{"Set-Cookie":"sg_session=; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=0"})}
+import {json,cookie,sha256,sameOrigin} from "../_lib.js";
+export async function onRequestPost({request,env}){if(!sameOrigin(request))return json({error:"Cross-origin request blocked."},403);const t=cookie(request,"sg_session");if(t)await env.DB.prepare("DELETE FROM sessions WHERE token_hash=?").bind(await sha256(t)).run();return json({ok:true},200,{"Set-Cookie":"sg_session=; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=0"})}
