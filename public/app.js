@@ -12,3 +12,7 @@ $("#sites").onclick=async e=>{const b=e.target.closest("[data-delete]");if(!b)re
 $("#logout").onclick=async()=>{await api("/api/auth/logout",{method:"POST"});await refresh()};
 document.querySelectorAll(".plan").forEach(b=>b.onclick=async()=>{if(!user){authOpen();return}try{const r=await api("/api/billing/create-subscription",{method:"POST",body:JSON.stringify({plan:b.dataset.plan})});location.href=r.approval_url}catch(e){alert(e.message)}});
 refresh().catch(()=>{});
+const billingResult=new URLSearchParams(location.search).get("billing");
+if(billingResult==="success")alert("PayPal approval received. SiteGuard will activate paid access after PayPal confirms the subscription by webhook. Refresh your dashboard in a moment.");
+if(billingResult==="cancel")alert("Checkout was cancelled. Your current plan has not been changed.");
+if(billingResult){const u=new URL(location.href);u.searchParams.delete("billing");history.replaceState({}, "", u.pathname+u.hash);}
