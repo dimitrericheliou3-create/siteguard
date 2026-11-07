@@ -31,6 +31,6 @@ export async function onRequestPost({request,env}){
       name:error?.name||"Error",
       message:error?.message||String(error)
     });
-    return json({error:"Could not create account. Please try again shortly."},500);
+    return json({error:"Could not create account. Please try again shortly.",debug_stage:stage},500);
   }
 }
