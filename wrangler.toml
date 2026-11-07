@@ -10,4 +10,5 @@ migrations_dir = "migrations"
 
 [vars]
 APP_NAME = "SiteGuard"
-PAYPAL_MODE = "sandbox"
+PAYPAL_MODE = "live"
+PAYPAL_CLIENT_ID = "BAA-cZWB-ZuT9NLfXzz3Qm9HWAZu67JyxFyWMAEyR-yUd0ZYEyRDltgTwseCMmUBrC6MbXNNtCKZkXKrw0"
