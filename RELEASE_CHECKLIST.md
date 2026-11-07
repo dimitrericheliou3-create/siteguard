@@ -40,3 +40,13 @@ Do not launch paid public service until each blocker is tested and verified.
 - [ ] Complete backup restore and production smoke test.
 
 **Current status: MVP source foundation only; not release-ready.**
+
+## Source improvements completed
+
+- [x] Wire the owner's Essential, Professional, and Agency PayPal Plan IDs into server-side checkout defaults.
+- [x] Correct paid-plan monitoring interval handling to five minutes, including existing sites on the next monitor run.
+- [x] Enforce same-origin checks on registration, login, and logout POST requests.
+- [x] Strengthen URL hostname syntax checks and reject common reserved/private-use hostname suffixes.
+- [x] Add automated Node.js tests and JavaScript syntax checks on pushes and pull requests.
+
+These source changes do not mean the production services are deployed or fully verified. The monitor Worker was not present in the Cloudflare account during the latest inspection. PayPal Pages settings showed only `PAYPAL_MODE=sandbox`; the REST Client ID, Client Secret, and Webhook ID were not visible as configured. Hostname filtering also does not replace DNS-resolution/IP pinning and independent SSRF testing.
