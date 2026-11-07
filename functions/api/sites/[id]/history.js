@@ -1,0 +1,2 @@
+import {json,requireUser} from "../../_lib.js";
+export async function onRequestGet({request,env,params}){const a=await requireUser(request,env);if(a.error)return a.error;const s=await env.DB.prepare("SELECT id FROM sites WHERE id=? AND user_id=?").bind(params.id,a.user.id).first();if(!s)return json({error:"Website not found."},404);const r=await env.DB.prepare("SELECT status,status_code,response_ms,error_message,checked_at FROM checks WHERE site_id=? ORDER BY checked_at DESC LIMIT 100").bind(params.id).all();return json({checks:r.results||[]})}

@@ -1,0 +1,14 @@
+name = "siteguard-monitor"
+main = "worker.js"
+compatibility_date = "2026-11-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "siteguard-db"
+database_id = "REPLACE_WITH_D1_DATABASE_ID"
+
+[triggers]
+crons = ["*/5 * * * *"]
+
+[vars]
+APP_ORIGIN = "https://YOUR-SITEGUARD-DOMAIN"

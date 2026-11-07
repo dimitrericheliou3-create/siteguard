@@ -1,0 +1,11 @@
+PRAGMA foreign_keys = ON;
+CREATE TABLE IF NOT EXISTS users (id TEXT PRIMARY KEY,email TEXT NOT NULL UNIQUE COLLATE NOCASE,password_hash TEXT NOT NULL,password_salt TEXT NOT NULL,created_at TEXT NOT NULL DEFAULT (datetime('now')));
+CREATE TABLE IF NOT EXISTS sessions (id TEXT PRIMARY KEY,user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,token_hash TEXT NOT NULL UNIQUE,expires_at TEXT NOT NULL,created_at TEXT NOT NULL DEFAULT (datetime('now')));
+CREATE TABLE IF NOT EXISTS sites (id TEXT PRIMARY KEY,user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,url TEXT NOT NULL,normalized_host TEXT NOT NULL,label TEXT,interval_minutes INTEGER NOT NULL DEFAULT 15,is_active INTEGER NOT NULL DEFAULT 1,last_status TEXT NOT NULL DEFAULT 'pending',last_checked_at TEXT,last_status_code INTEGER,last_response_ms INTEGER,consecutive_failures INTEGER NOT NULL DEFAULT 0,created_at TEXT NOT NULL DEFAULT (datetime('now')));
+CREATE TABLE IF NOT EXISTS checks (id INTEGER PRIMARY KEY AUTOINCREMENT,site_id TEXT NOT NULL REFERENCES sites(id) ON DELETE CASCADE,status TEXT NOT NULL,status_code INTEGER,response_ms INTEGER,error_message TEXT,checked_at TEXT NOT NULL DEFAULT (datetime('now')));
+CREATE TABLE IF NOT EXISTS subscriptions (id TEXT PRIMARY KEY,user_id TEXT NOT NULL UNIQUE REFERENCES users(id) ON DELETE CASCADE,paypal_subscription_id TEXT UNIQUE,paypal_plan_id TEXT,status TEXT NOT NULL DEFAULT 'INACTIVE',plan_key TEXT NOT NULL DEFAULT 'free',current_period_end TEXT,updated_at TEXT NOT NULL DEFAULT (datetime('now')));
+CREATE TABLE IF NOT EXISTS paypal_events (event_id TEXT PRIMARY KEY,event_type TEXT NOT NULL,received_at TEXT NOT NULL DEFAULT (datetime('now')));
+CREATE INDEX IF NOT EXISTS idx_sites_due ON sites(is_active,last_checked_at);
+CREATE INDEX IF NOT EXISTS idx_sites_user ON sites(user_id);
+CREATE INDEX IF NOT EXISTS idx_sessions_token ON sessions(token_hash);
+CREATE INDEX IF NOT EXISTS idx_checks_site_time ON checks(site_id,checked_at DESC);

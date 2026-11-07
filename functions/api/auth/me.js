@@ -1,0 +1,2 @@
+import {json,currentUser,planForUser} from "../_lib.js";
+export async function onRequestGet({request,env}){const user=await currentUser(request,env);if(!user)return json({user:null});const plan=await planForUser(user.id,env);const subscription=await env.DB.prepare("SELECT status,plan_key FROM subscriptions WHERE user_id=?").bind(user.id).first();return json({user,plan,subscription})}

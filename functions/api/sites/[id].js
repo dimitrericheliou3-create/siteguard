@@ -1,0 +1,2 @@
+import {json,requireUser} from "../_lib.js";
+export async function onRequestDelete({request,env,params}){const a=await requireUser(request,env);if(a.error)return a.error;const r=await env.DB.prepare("DELETE FROM sites WHERE id=? AND user_id=?").bind(params.id,a.user.id).run();if(!r.meta?.changes)return json({error:"Website not found."},404);return json({ok:true})}
