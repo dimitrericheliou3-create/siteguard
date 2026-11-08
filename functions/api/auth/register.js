@@ -31,7 +31,7 @@ export async function onRequestPost({request,env}){
       name:error?.name||"Error",
       message:error?.message||String(error)
     });
-    const diagnosticStage=error?.code?stage+":"+error.code:stage;
+    const diagnosticStage=error?.code?stage+":"+error.code+(error?.cause?.name?":"+error.cause.name:""):stage+(error?.name?":"+error.name:"");
     return json({error:"Could not create account. Please try again shortly.",debug_stage:diagnosticStage},500);
   }
 }
